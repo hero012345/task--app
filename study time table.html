@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Timetable | lg-GHAZEL</title> <!-- Added developer name to the tab -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e6f7ff; /* Calm light blue background */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+        }
+        h2 {
+            text-align: center;
+            color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .progress {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 16px;
+            color: #0056b3;
+        }
+        .add-task {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .add-task input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .add-task button {
+            margin-left: 10px;
+            padding: 8px 16px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .add-task button:hover {
+            background-color: #004080;
+        }
+        .delete-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .delete-btn:hover {
+            background-color: #cc0000;
+        }
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .auth-form input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .auth-form button {
+            padding: 8px 16px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .auth-form button:hover {
+            background-color: #004080;
+        }
+        .logout-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 8px 16px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: #cc0000;
+        }
+        .hidden {
+            display: none;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Login/Register Form -->
+    <div id="auth-section">
+        <h2>Welcome to Study Timetable</h2>
+        <div class="auth-form">
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="login()">Login</button>
+            <button onclick="register()">Register</button>
+        </div>
+        <div class="footer">
+          Developed by <strong>lg-GHAZEL</strong>
+      </div>
+    </div>
+
+    <!-- Timetable Section (Hidden by Default) -->
+    <div id="timetable-section" class="hidden">
+        <button class="logout-btn" onclick="logout()">Logout</button>
+        <div class="progress">0% Accomplished</div>
+        <h2>Study Timetable</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Time</th>
+                    <th>Done</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="task-list">
+                <!-- Tasks will be added here dynamically -->
+            </tbody>
+        </table>
+        <div class="add-task">
+            <input type="text" id="new-task" placeholder="Enter a new task">
+            <input type="text" id="new-time" placeholder="Enter time (e.g., 6:15 PM - 6:30 PM)">
+            <button onclick="addTask()">Add Task</button>
+        </div>
+        <!-- Footer with developer's name -->
+        <div class="footer">
+            Developed by <strong>lg-GHAZEL</strong>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Simulated user database (stored in localStorage)
+    const usersKey = 'studyTimetableUsers';
+    const tasksKey = 'studyTimetableTasks';
+    let currentUser = null;
+
+    // Initialize users and tasks in localStorage if they don't exist
+    if (!localStorage.getItem(usersKey)) {
+        localStorage.setItem(usersKey, JSON.stringify({}));
+    }
+    if (!localStorage.getItem(tasksKey)) {
+        localStorage.setItem(tasksKey, JSON.stringify({}));
+    }
+
+    // Get users and tasks from localStorage
+    const users = JSON.parse(localStorage.getItem(usersKey));
+    const tasks = JSON.parse(localStorage.getItem(tasksKey));
+
+    // Login function
+    function login() {
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        if (!username || !password) {
+            alert('Please enter both username and password.');
+            return;
+        }
+
+        if (users[username] && users[username] === password) {
+            currentUser = username;
+            showTimetable();
+            loadTasks();
+        } else {
+            alert('Invalid username or password.');
+        }
+    }
+
+    // Register function
+    function register() {
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        if (!username || !password) {
+            alert('Please enter both username and password.');
+            return;
+        }
+
+        if (users[username]) {
+            alert('Username already exists.');
+        } else {
+            users[username] = password;
+            tasks[username] = [];
+            localStorage.setItem(usersKey, JSON.stringify(users));
+            localStorage.setItem(tasksKey, JSON.stringify(tasks));
+            alert('Registration successful. Please login.');
+        }
+    }
+
+    // Logout function
+    function logout() {
+        currentUser = null;
+        document.getElementById('auth-section').classList.remove('hidden');
+        document.getElementById('timetable-section').classList.add('hidden');
+    }
+
+    // Show timetable section
+    function showTimetable() {
+        document.getElementById('auth-section').classList.add('hidden');
+        document.getElementById('timetable-section').classList.remove('hidden');
+    }
+
+    // Load tasks for the current user
+    function loadTasks() {
+        const userTasks = tasks[currentUser] || [];
+        const taskList = document.getElementById('task-list');
+        taskList.innerHTML = '';
+
+        userTasks.forEach((task, index) => {
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${task.task}</td>
+                <td>${task.time}</td>
+                <td><input type="checkbox" class="task-checkbox" ${task.done ? 'checked' : ''}></td>
+                <td><button class="delete-btn" onclick="deleteTask(${index})">Delete</button></td>
+            `;
+            taskList.appendChild(newRow);
+            newRow.querySelector('.task-checkbox').addEventListener('change', () => updateTaskStatus(index));
+        });
+
+        updateProgress();
+    }
+
+    // Add a new task
+    function addTask() {
+        const newTaskInput = document.getElementById('new-task');
+        const newTimeInput = document.getElementById('new-time');
+        const taskName = newTaskInput.value.trim();
+        const taskTime = newTimeInput.value.trim();
+
+        if (!taskName || !taskTime) {
+            alert('Please enter both task and time.');
+            return;
+        }
+
+        tasks[currentUser].push({ task: taskName, time: taskTime, done: false });
+        localStorage.setItem(tasksKey, JSON.stringify(tasks));
+        loadTasks();
+
+        newTaskInput.value = '';
+        newTimeInput.value = '';
+    }
+
+    // Delete a task
+    function deleteTask(index) {
+        tasks[currentUser].splice(index, 1);
+        localStorage.setItem(tasksKey, JSON.stringify(tasks));
+        loadTasks();
+    }
+
+    // Update task status (done/not done)
+    function updateTaskStatus(index) {
+        tasks[currentUser][index].done = !tasks[currentUser][index].done;
+        localStorage.setItem(tasksKey, JSON.stringify(tasks));
+        updateProgress();
+    }
+
+    // Update progress
+    function updateProgress() {
+        const userTasks = tasks[currentUser] || [];
+        const checkedCount = userTasks.filter(task => task.done).length;
+        const totalTasks = userTasks.length;
+        const percentage = totalTasks === 0 ? 0 : (checkedCount / totalTasks) * 100;
+        document.querySelector('.progress').textContent = `${percentage.toFixed(0)}% Accomplished`;
+    }
+</script>
+
+</body>
+</html>
