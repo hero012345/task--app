@@ -1,190 +1,335 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Timetable | lg-GHAZEL</title> <!-- Added developer name to the tab -->
-      <link rel="icon" href="https://img.freepik.com/free-vector/realistic-ramadan-lamp_98292-2693.jpg?t=st=1739817587~exp=1739821187~hmac=4dd1ef7b0f0eb42fcda1658d00a0a6238dbf6f46f3008c64a3748e1f9aefc528&w=740" type="image/png">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #e6f7ff; /* Calm light blue background */
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            width: 100%;
-            position: relative;
-        }
-        h2 {
-            text-align: center;
-            color: #0056b3;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-            color: #333;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-        .progress {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 16px;
-            color: #0056b3;
-        }
-        .add-task {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .add-task input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .add-task button {
-            margin-left: 10px;
-            padding: 8px 16px;
-            background-color: #0056b3;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .add-task button:hover {
-            background-color: #004080;
-        }
-        .delete-btn {
-            background-color: #ff4d4d;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .delete-btn:hover {
-            background-color: #cc0000;
-        }
-        .auth-form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .auth-form input {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .auth-form button {
-            padding: 8px 16px;
-            background-color: #0056b3;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .auth-form button:hover {
-            background-color: #004080;
-        }
-        .logout-btn {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 8px 16px;
-            background-color: #ff4d4d;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .logout-btn:hover {
-            background-color: #cc0000;
-        }
-        .hidden {
-            display: none;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-            color: #666;
-        }
-    </style>
+  <!--Task--app=22.18.9.0v-->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Timetable | lg-GHAZEL</title>
+  <link rel="icon" href="https://img.freepik.com/free-vector/realistic-ramadan-lamp_98292-2693.jpg?t=st=1739817587~exp=1739821187~hmac=4dd1ef7b0f0eb42fcda1658d00a0a6238dbf6f46f3008c64a3748e1f9aefc528&w=740" type="image/png">
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #e6f7ff;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      transition: background-color 0.5s ease, color 0.5s ease; /* Smooth transition */
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+      position: relative;
+      transition: background-color 0.5s ease, color 0.5s ease; /* Smooth transition */
+    }
+    h2 {
+      text-align: center;
+      color: #0056b3;
+      transition: color 0.5s ease; /* Smooth transition */
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      transition: background-color 0.5s ease, color 0.5s ease; /* Smooth transition */
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+      transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease; /* Smooth transition */
+    }
+    th {
+      background-color: #f2f2f2;
+      color: #333;
+      transition: background-color 0.5s ease, color 0.5s ease; /* Smooth transition */
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+      transition: background-color 0.5s ease; /* Smooth transition */
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+      transition: background-color 0.5s ease; /* Smooth transition */
+    }
+    .progress {
+      position: absolute;
+      top: 10px;
+      right: 100px;
+      font-size: 16px;
+      color: #0056b3;
+      transition: color 0.5s ease; /* Smooth transition */
+    }
+    .add-task {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .add-task input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease; /* Smooth transition */
+    }
+    .add-task button {
+      margin-left: 10px;
+      padding: 8px 16px;
+      background-color: #0056b3;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.5s ease; /* Smooth transition */
+    }
+    .add-task button:hover {
+      background-color: #004080;
+    }
+    .delete-btn {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.5s ease; /* Smooth transition */
+    }
+    .delete-btn:hover {
+      background-color: #cc0000;
+    }
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .auth-form input {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease; /* Smooth transition */
+    }
+    .auth-form button {
+      padding: 8px 16px;
+      background-color: #0056b3;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.5s ease; /* Smooth transition */
+    }
+    .auth-form button:hover {
+      background-color: #004080;
+    }
+    .logout-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 8px 16px;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.5s ease; /* Smooth transition */
+    }
+    .logout-btn:hover {
+      background-color: #cc0000;
+    }
+    .hidden {
+      display: none;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #666;
+      transition: color 0.5s ease; /* Smooth transition */
+    }
+
+    /* Dark Mode Toggle Switch */
+    .dark-mode-switch {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+    .dark-mode-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "🌙";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    input:checked + .slider {
+      background-color: #0056b3;
+    }
+    input:checked + .slider:before {
+      content: "☀️";
+      transform: translateX(26px);
+    }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+      background-color: #121212;
+      color: #ffffff;
+    }
+    body.dark-mode .container {
+      background-color: #1e1e1e;
+      color: #ffffff;
+    }
+    body.dark-mode table {
+      background-color: #1e1e1e;
+      color: #ffffff;
+    }
+    body.dark-mode th,
+    body.dark-mode td {
+      border-color: #444;
+    }
+    body.dark-mode th {
+      background-color: #333;
+      color: #ffffff;
+    }
+    body.dark-mode tr:nth-child(even) {
+      background-color: #2a2a2a;
+    }
+    body.dark-mode tr:hover {
+      background-color: #444;
+    }
+    body.dark-mode .add-task input {
+      background-color: #333;
+      color: #ffffff;
+      border-color: #444;
+    }
+    body.dark-mode .add-task button {
+      background-color: #0056b3;
+      color: #ffffff;
+    }
+    body.dark-mode .delete-btn {
+      background-color: #ff4d4d;
+      color: #ffffff;
+    }
+    body.dark-mode .logout-btn {
+      background-color: #ff4d4d;
+      color: #ffffff;
+    }
+    body.dark-mode .progress {
+      color: #ffffff;
+    }
+    body.dark-mode .footer {
+      color: #999;
+    }
+    .info{
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 14px;
+      color: #666;
+      transition: color 0.5s ease; /* Smooth transition */
+    }
+
+    .info a{
+      color: #0056b3;
+      text-decoration: none;
+    }
+
+    .info a:hover{
+      color: #004080;
+      transition: ease 0.5s;
+      transform: scale(1.1);
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <!-- Dark Mode Toggle Switch -->
+    <label class="dark-mode-switch">
+      <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
+      <span class="slider"></span>
+    </label>
 
-<div class="container">
     <!-- Login/Register Form -->
     <div id="auth-section">
-        <h2>Welcome to Task-app</h2>
-        <div class="auth-form">
-            <input type="text" id="username" placeholder="Username">
-            <input type="password" id="password" placeholder="Password">
-            <button onclick="login()">Login</button>
-            <button onclick="register()">Register</button>
-        </div>
-        <div class="footer">
-          Developed by <strong>lg-GHAZEL</strong>
+      <h2>Welcome to Task-app</h2>
+      <div class="auth-form">
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <button onclick="register()">Register</button>
+      </div>
+      <div class="footer">
+        Developed by <strong>lg-GHAZEL</strong>
       </div>
     </div>
 
     <!-- Timetable Section (Hidden by Default) -->
     <div id="timetable-section" class="hidden">
-        <button class="logout-btn" onclick="logout()">Logout</button>
-        <div class="progress">0% Accomplished</div>
-        <h2>Study Timetable</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Task</th>
-                    <th>Time</th>
-                    <th>Done</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="task-list">
-                <!-- Tasks will be added here dynamically -->
-            </tbody>
-        </table>
-        <div class="add-task">
-            <input type="text" id="new-task" placeholder="Enter a new task">
-            <input type="text" id="new-time" placeholder="Enter time (e.g., 6:15 PM - 6:30 PM)">
-            <button onclick="addTask()">Add Task</button>
-        </div>
-        <!-- Footer with developer's name -->
-        <div class="footer">
-            Developed by <strong>lg-GHAZEL</strong>
-        </div>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+      <div class="progress">0% Accomplished</div>
+      <h2>Study Timetable</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Time</th>
+            <th>Done</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="task-list">
+          <!-- Tasks will be added here dynamically -->
+        </tbody>
+      </table>
+      <div class="add-task">
+        <input type="text" id="new-task" placeholder="Enter a new task">
+        <input type="text" id="new-time" placeholder="Enter time (e.g., 6:15 PM - 6:30 PM)">
+        <button onclick="addTask()">Add Task</button>
+      </div>
+      <!-- Footer with developer's name -->
+      <div class="footer">
+        Developed by <strong>lg-GHAZEL</strong>
+      </div>
     </div>
-</div>
+  </div>
+  <div class="info">
+    <a href="https://download1501.mediafire.com/lmik4pev10ugM7IpW4R6Qip0yJlfwVEkVt3WY2t4fGwFnEzqGx5Mte0nzGkTil33i9JZxsmfRpSIuumvrF3SyGZLcHGXB6XXfzvVEZyd-05Tk8Dk-ardO325HzCpMiyYGQnJX0bOkuxWSCiDmRJDcYtD8WoaSrYBDqRq5Ko8XHidLrc/o2crjusj9doar8s/Task--app%3D22.18.9.0v.rtf">about the new version</a>
 
-<script>
+  </div>
+
+  <script>
     // Simulated user database (stored in localStorage)
     const usersKey = 'studyTimetableUsers';
     const tasksKey = 'studyTimetableTasks';
@@ -192,10 +337,10 @@
 
     // Initialize users and tasks in localStorage if they don't exist
     if (!localStorage.getItem(usersKey)) {
-        localStorage.setItem(usersKey, JSON.stringify({}));
+      localStorage.setItem(usersKey, JSON.stringify({}));
     }
     if (!localStorage.getItem(tasksKey)) {
-        localStorage.setItem(tasksKey, JSON.stringify({}));
+      localStorage.setItem(tasksKey, JSON.stringify({}));
     }
 
     // Get users and tasks from localStorage
@@ -204,121 +349,142 @@
 
     // Login function
     function login() {
-        const username = document.getElementById('username').value.trim();
-        const password = document.getElementById('password').value.trim();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
 
-        if (!username || !password) {
-            alert('Please enter both username and password.');
-            return;
-        }
+      if (!username || !password) {
+        alert('Please enter both username and password.');
+        return;
+      }
 
-        if (users[username] && users[username] === password) {
-            currentUser = username;
-            showTimetable();
-            loadTasks();
-        } else {
-            alert('Invalid username or password.');
-        }
+      if (users[username] && users[username] === password) {
+        currentUser = username;
+        showTimetable();
+        loadTasks();
+      } else {
+        alert('Invalid username or password.');
+      }
     }
 
     // Register function
     function register() {
-        const username = document.getElementById('username').value.trim();
-        const password = document.getElementById('password').value.trim();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
 
-        if (!username || !password) {
-            alert('Please enter both username and password.');
-            return;
-        }
+      if (!username || !password) {
+        alert('Please enter both username and password.');
+        return;
+      }
 
-        if (users[username]) {
-            alert('Username already exists.');
-        } else {
-            users[username] = password;
-            tasks[username] = [];
-            localStorage.setItem(usersKey, JSON.stringify(users));
-            localStorage.setItem(tasksKey, JSON.stringify(tasks));
-            alert('Registration successful. Please login.');
-        }
+      if (users[username]) {
+        alert('Username already exists.');
+      } else {
+        users[username] = password;
+        tasks[username] = [];
+        localStorage.setItem(usersKey, JSON.stringify(users));
+        localStorage.setItem(tasksKey, JSON.stringify(tasks));
+        alert('Registration successful. Please login.');
+      }
     }
 
     // Logout function
     function logout() {
-        currentUser = null;
-        document.getElementById('auth-section').classList.remove('hidden');
-        document.getElementById('timetable-section').classList.add('hidden');
+      currentUser = null;
+      document.getElementById('auth-section').classList.remove('hidden');
+      document.getElementById('timetable-section').classList.add('hidden');
     }
 
     // Show timetable section
     function showTimetable() {
-        document.getElementById('auth-section').classList.add('hidden');
-        document.getElementById('timetable-section').classList.remove('hidden');
+      document.getElementById('auth-section').classList.add('hidden');
+      document.getElementById('timetable-section').classList.remove('hidden');
     }
 
     // Load tasks for the current user
     function loadTasks() {
-        const userTasks = tasks[currentUser] || [];
-        const taskList = document.getElementById('task-list');
-        taskList.innerHTML = '';
+      const userTasks = tasks[currentUser] || [];
+      const taskList = document.getElementById('task-list');
+      taskList.innerHTML = '';
 
-        userTasks.forEach((task, index) => {
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td>${task.task}</td>
-                <td>${task.time}</td>
-                <td><input type="checkbox" class="task-checkbox" ${task.done ? 'checked' : ''}></td>
-                <td><button class="delete-btn" onclick="deleteTask(${index})">Delete</button></td>
-            `;
-            taskList.appendChild(newRow);
-            newRow.querySelector('.task-checkbox').addEventListener('change', () => updateTaskStatus(index));
-        });
+      userTasks.forEach((task, index) => {
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+          <td>${task.task}</td>
+          <td>${task.time}</td>
+          <td><input type="checkbox" class="task-checkbox" ${task.done ? 'checked' : ''}></td>
+          <td><button class="delete-btn" onclick="deleteTask(${index})">Delete</button></td>
+        `;
+        taskList.appendChild(newRow);
+        newRow.querySelector('.task-checkbox').addEventListener('change', () => updateTaskStatus(index));
+      });
 
-        updateProgress();
+      updateProgress();
     }
 
     // Add a new task
     function addTask() {
-        const newTaskInput = document.getElementById('new-task');
-        const newTimeInput = document.getElementById('new-time');
-        const taskName = newTaskInput.value.trim();
-        const taskTime = newTimeInput.value.trim();
+      const newTaskInput = document.getElementById('new-task');
+      const newTimeInput = document.getElementById('new-time');
+      const taskName = newTaskInput.value.trim();
+      const taskTime = newTimeInput.value.trim();
 
-        if (!taskName || !taskTime) {
-            alert('Please enter both task and time.');
-            return;
-        }
+      if (!taskName || !taskTime) {
+        alert('Please enter both task and time.');
+        return;
+      }
 
-        tasks[currentUser].push({ task: taskName, time: taskTime, done: false });
-        localStorage.setItem(tasksKey, JSON.stringify(tasks));
-        loadTasks();
+      tasks[currentUser].push({ task: taskName, time: taskTime, done: false });
+      localStorage.setItem(tasksKey, JSON.stringify(tasks));
+      loadTasks();
 
-        newTaskInput.value = '';
-        newTimeInput.value = '';
+      newTaskInput.value = '';
+      newTimeInput.value = '';
     }
 
     // Delete a task
     function deleteTask(index) {
-        tasks[currentUser].splice(index, 1);
-        localStorage.setItem(tasksKey, JSON.stringify(tasks));
-        loadTasks();
+      tasks[currentUser].splice(index, 1);
+      localStorage.setItem(tasksKey, JSON.stringify(tasks));
+      loadTasks();
     }
 
     // Update task status (done/not done)
     function updateTaskStatus(index) {
-        tasks[currentUser][index].done = !tasks[currentUser][index].done;
-        localStorage.setItem(tasksKey, JSON.stringify(tasks));
-        updateProgress();
+      tasks[currentUser][index].done = !tasks[currentUser][index].done;
+      localStorage.setItem(tasksKey, JSON.stringify(tasks));
+      updateProgress();
     }
 
     // Update progress
     function updateProgress() {
-        const userTasks = tasks[currentUser] || [];
-        const checkedCount = userTasks.filter(task => task.done).length;
-        const totalTasks = userTasks.length;
-        const percentage = totalTasks === 0 ? 0 : (checkedCount / totalTasks) * 100;
-        document.querySelector('.progress').textContent = `${percentage.toFixed(0)}% Accomplished`;
+      const userTasks = tasks[currentUser] || [];
+      const checkedCount = userTasks.filter(task => task.done).length;
+      const totalTasks = userTasks.length;
+      const percentage = totalTasks === 0 ? 0 : (checkedCount / totalTasks) * 100;
+      document.querySelector('.progress').textContent = `${percentage.toFixed(0)}% Accomplished`;
     }
-</script>
 
+    // Dark Mode Toggle Function
+    function toggleDarkMode() {
+      const body = document.body;
+      body.classList.toggle('dark-mode');
+
+      // Save user preference in localStorage
+      const isDarkMode = body.classList.contains('dark-mode');
+      localStorage.setItem('darkMode', isDarkMode);
+    }
+
+    // Check for saved dark mode preference on page load
+    function checkDarkModePreference() {
+      const isDarkMode = localStorage.getItem('darkMode') === 'true';
+      if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+        document.getElementById('dark-mode-toggle').checked = true;
+      }
+    }
+
+    // Call the function on page load
+    checkDarkModePreference();
+  </script>
 </body>
 </html>
