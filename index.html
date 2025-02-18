@@ -1,288 +1,533 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <!--Task--app=22.18.9.0v-->
+  <!--Task--app=23.22.2.0v-->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Study Timetable | lg-GHAZEL</title>
-  <link rel="icon" href="https://img.freepik.com/free-vector/realistic-ramadan-lamp_98292-2693.jpg?t=st=1739817587~exp=1739821187~hmac=4dd1ef7b0f0eb42fcda1658d00a0a6238dbf6f46f3008c64a3748e1f9aefc528&w=740" type="image/png">
-  <style>
-    /* General Styles */
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #e6f7ff;
-      color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: auto;
-      margin: 0;
-      transition: background-color 0.5s ease, color 0.5s ease; /* Smooth transition */
-    }
-    .container {
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      max-width: 600px;
-      width: 100%;
-      position: relative;
-      transition: background-color 0.5s ease, color 0.5s ease; /* Smooth transition */
-    }
-    h2 {
-      text-align: center;
-      color: #0056b3;
-      transition: color 0.5s ease; /* Smooth transition */
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      transition: background-color 0.5s ease, color 0.5s ease; /* Smooth transition */
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 12px;
-      text-align: left;
-      transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease; /* Smooth transition */
-    }
-    th {
-      background-color: #f2f2f2;
-      color: #333;
-      transition: background-color 0.5s ease, color 0.5s ease; /* Smooth transition */
-    }
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-      transition: background-color 0.5s ease; /* Smooth transition */
-    }
-    tr:hover {
-      background-color: #f1f1f1;
-      transition: background-color 0.5s ease; /* Smooth transition */
-    }
-    .progress {
-      position: absolute;
-      top: 10px;
-      right: 100px;
-      font-size: 16px;
-      color: #0056b3;
-      transition: color 0.5s ease; /* Smooth transition */
-    }
-    .add-task {
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-    }
-    .add-task input {
-      flex: 1;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease; /* Smooth transition */
-    }
-    .add-task button {
-      padding: 8px 16px;
-      background-color: #0056b3;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.5s ease; /* Smooth transition */
-    }
-    .add-task button:hover {
-      background-color: #004080;
-    }
-    .delete-btn {
-      background-color: #ff4d4d;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.5s ease; /* Smooth transition */
-    }
-    .delete-btn:hover {
-      background-color: #cc0000;
-    }
-    .auth-form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .auth-form input {
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease; /* Smooth transition */
-    }
-    .auth-form button {
-      padding: 8px 16px;
-      background-color: #0056b3;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.5s ease; /* Smooth transition */
-    }
-    .auth-form button:hover {
-      background-color: #004080;
-    }
-    .logout-btn {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      padding: 8px 16px;
-      background-color: #ff4d4d;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.5s ease; /* Smooth transition */
-    }
-    .logout-btn:hover {
-      background-color: #cc0000;
-    }
-    .hidden {
-      display: none;
-    }
-    .footer {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 14px;
-      color: #666;
-      transition: color 0.5s ease; /* Smooth transition */
-    }
+  <title>Task App | lg-GHAZEL</title>
+  <link rel="icon"
+    href="https://img.freepik.com/free-vector/realistic-ramadan-lamp_98292-2693.jpg?t=st=1739817587~exp=1739821187~hmac=4dd1ef7b0f0eb42fcda1658d00a0a6238dbf6f46f3008c64a3748e1f9aefc528&w=740"
+    type="image/png">
+    <style>
+      /* General Styles */
+      body {
+        font-family: 'Arial', sans-serif;
+        background-color: #e6f7ff;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        transition: background-color 0.5s ease, color 0.5s ease;
+      }
+    
+      .container {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        width: 100%;
+        position: relative;
+        transition: background-color 0.5s ease, color 0.5s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    
+      h2 {
+        text-align: center;
+        color: #0056b3;
+        transition: color 0.5s ease;
+      }
+    
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        transition: background-color 0.5s ease, color 0.5s ease;
+      }
+    
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+        transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+      }
+    
+      th {
+        background-color: #f2f2f2;
+        color: #333;
+        transition: background-color 0.5s ease, color 0.5s ease;
+      }
+    
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+        transition: background-color 0.5s ease;
+      }
+    
+      tr:hover {
+        background-color: #f1f1f1;
+        transition: background-color 0.5s ease;
+      }
+    
+      .progress {
+        font-size: 16px;
+        color: #0056b3;
+        transition: color 0.5s ease;
+        margin-bottom: 20px;
+      }
+    
+      .add-task {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+      }
+    
+      .add-task input {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+      }
+    
+      .add-task button {
+        padding: 8px 16px;
+        background-color: #0056b3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.5s ease;
+      }
+    
+      .add-task button:hover {
+        background-color: #004080;
+      }
+    
+      .delete-btn {
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.5s ease;
+      }
+    
+      .delete-btn:hover {
+        background-color: #cc0000;
+      }
+    
+      .auth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+    
+      .auth-form input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+      }
+    
+      .auth-form button {
+        padding: 8px 16px;
+        background-color: #0056b3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.5s ease;
+      }
+    
+      .auth-form button:hover {
+        background-color: #004080;
+      }
+    
+      .logout-btn {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        padding: 8px 16px;
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.5s ease;
+      }
+    
+      .logout-btn:hover {
+        background-color: #cc0000;
+      }
+    
+      .hidden {
+        display: none;
+      }
+    
+      .footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+        color: #666;
+        transition: color 0.5s ease;
+      }
+    
+      /* Dark Mode Toggle Switch */
+      .dark-mode-switch {
+        position: absolute;
+        top: 10px;
+        right: 50px;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+      }
+    
+      .dark-mode-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+    
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+    
+      .slider:before {
+        position: absolute;
+        content: "🌙";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+      }
+    
+      input:checked+.slider {
+        background-color: #0056b3;
+      }
+    
+      input:checked+.slider:before {
+        content: "☀️";
+        transform: translateX(26px);
+      }
+    
+      /* Dark Mode Styles */
+      body.dark-mode {
+        background-color: #121212;
+        color: #ffffff;
+      }
+    
+      body.dark-mode .container {
+        background-color: #1e1e1e;
+        color: #ffffff;
+      }
+    
+      body.dark-mode table {
+        background-color: #1e1e1e;
+        color: #ffffff;
+      }
+    
+      body.dark-mode th,
+      body.dark-mode td {
+        border-color: #444;
+      }
+    
+      body.dark-mode th {
+        background-color: #333;
+        color: #ffffff;
+      }
+    
+      body.dark-mode tr:nth-child(even) {
+        background-color: #2a2a2a;
+      }
+    
+      body.dark-mode tr:hover {
+        background-color: #444;
+      }
+    
+      body.dark-mode .add-task input {
+        background-color: #333;
+        color: #ffffff;
+        border-color: #444;
+      }
+    
+      body.dark-mode .add-task button {
+        background-color: #0056b3;
+        color: #ffffff;
+      }
+    
+      body.dark-mode .delete-btn {
+        background-color: #ff4d4d;
+        color: #ffffff;
+      }
+    
+      body.dark-mode .logout-btn {
+        background-color: #ff4d4d;
+        color: #ffffff;
+      }
+    
+      body.dark-mode .progress {
+        color: #ffffff;
+      }
+    
+      body.dark-mode .footer {
+        color: #999;
+      }
+    
+      .info {
+        position: fixed;
+        bottom: 5px;
+        right: 10px;
+        font-size: 14px;
+        color: #666;
+        transition: color 0.5s ease;
+      }
+    
+      .info a {
+        color: #0056b3;
+        text-decoration: none;
+      }
+    
+      .info a:hover {
+        color: #004080;
+        transition: ease 0.5s;
+        transform: scale(1.1);
+      }
+    
+      /* Pomodoro Timer Styles */
+      .pomodoro-timer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        background-color: #f2f2f2;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.5s ease, color 0.5s ease;
+      }
+    
+      .pomodoro-timer h3 {
+        color: #0056b3;
+        margin-bottom: 10px;
+        transition: color 0.5s ease;
+      }
+    
+      .timer-display {
+        font-size: 2em;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 15px;
+        transition: color 0.5s ease;
+      }
+    
+      .timer-controls {
+        display: flex;
+        gap: 10px;
+      }
+    
+      .timer-controls button {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        border: 1px solid #ddd;
+        font-size: 1em;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+    
+      .timer-controls button:first-child {
+        background-color: #5cb85c;
+        color: white;
+      }
+    
+      .timer-controls button:first-child:hover {
+        background-color: #4cae4c;
+      }
+    
+      .timer-controls button:nth-child(2) {
+        background-color: #f0ad4e;
+        color: white;
+      }
+    
+      .timer-controls button:nth-child(2):hover {
+        background-color: #eea236;
+      }
+    
+      .timer-controls button:last-child {
+        background-color: #d9534f;
+        color: white;
+      }
+    
+      .timer-controls button:last-child:hover {
+        background-color: #d43f3a;
+        transition: color 0.5s ease;
+      }
+    
+      body.dark-mode .pomodoro-timer {
+        background-color: #333;
+        box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+      }
+    
+      body.dark-mode .pomodoro-timer h3 {
+        color: #ffffff;
+      }
+    
+      body.dark-mode .timer-display {
+        color: #ffffff;
+      }
+    
+      /* Date and Hour Display */
+      .date-hour {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #0056b3;
+        transition: color 0.5s ease;
+      }
+    
+      .date-hour span {
+        display: block;
+        font-size: 1.2em;
+        margin-bottom: 5px;
+      }
+    
+      body.dark-mode .date-hour {
+        color: #ffffff;
+      }
+    
+      /* Settings Styles */
+      .settings {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        font-size: 1.2em;
+        color: #0056b3;
+        transition: color 0.5s ease;
+      }
+    
+      .settings:hover {
+        color: #004080;
+      }
+    
+      #settings-panel {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+      }
+    
+      #settings-panel label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    
+      #settings-panel input[type="number"] {
+        width: 50px;
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+    
+      #settings-panel button {
+        padding: 8px 16px;
+        background-color: #0056b3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.5s ease;
+      }
+    
+      #settings-panel button:hover {
+        background-color: #004080;
+      }
+    
+      body.dark-mode #settings-panel {
+        background-color: #1e1e1e;
+        color: #ffffff;
+      }
+    
+      body.dark-mode #settings-panel input[type="number"] {
+        background-color: #333;
+        color: #ffffff;
+        border-color: #444;
+      }
+      #time-format {
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+      }
 
-    /* Dark Mode Toggle Switch */
-    .dark-mode-switch {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      display: inline-block;
-      width: 60px;
-      height: 34px;
-    }
-    .dark-mode-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      transition: 0.4s;
-      border-radius: 34px;
-    }
-    .slider:before {
-      position: absolute;
-      content: "🌙";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      transition: 0.4s;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-    }
-    input:checked + .slider {
-      background-color: #0056b3;
-    }
-    input:checked + .slider:before {
-      content: "☀️";
-      transform: translateX(26px);
-    }
-
-    /* Dark Mode Styles */
-    body.dark-mode {
-      background-color: #121212;
-      color: #ffffff;
-    }
-    body.dark-mode .container {
-      background-color: #1e1e1e;
-      color: #ffffff;
-    }
-    body.dark-mode table {
-      background-color: #1e1e1e;
-      color: #ffffff;
-    }
-    body.dark-mode th,
-    body.dark-mode td {
-      border-color: #444;
-    }
-    body.dark-mode th {
-      background-color: #333;
-      color: #ffffff;
-    }
-    body.dark-mode tr:nth-child(even) {
-      background-color: #2a2a2a;
-    }
-    body.dark-mode tr:hover {
-      background-color: #444;
-    }
-    body.dark-mode .add-task input {
-      background-color: #333;
-      color: #ffffff;
-      border-color: #444;
-    }
-    body.dark-mode .add-task button {
-      background-color: #0056b3;
-      color: #ffffff;
-    }
-    body.dark-mode .delete-btn {
-      background-color: #ff4d4d;
-      color: #ffffff;
-    }
-    body.dark-mode .logout-btn {
-      background-color: #ff4d4d;
-      color: #ffffff;
-    }
-    body.dark-mode .progress {
-      color: #ffffff;
-    }
-    body.dark-mode .footer {
-      color: #999;
-    }
-    .info{
-      position: fixed;
-      bottom: 5px;
-      right: 10px;
-      font-size: 14px;
-      color: #666;
-      transition: color 0.5s ease;
-       /* Smooth transition */
-    }
-
-
-    .info a{
-      color: #0056b3;
-      text-decoration: none;
-    }
-
-    .info a:hover{
-      color: #004080;
-      transition: ease 0.5s;
-      transform: scale(1.1);
-    }
-  </style>
+      body.dark-mode #time-format {
+        background-color: #333;
+        color: #ffffff;
+        border-color: #444;
+      }
+    </style>
+    
 </head>
+
 <body>
   <div class="container">
-    <!-- Dark Mode Toggle Switch -->
-    <label class="dark-mode-switch">
-      <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
-      <span class="slider"></span>
-    </label>
+    <!-- Date and Hour Display -->
+    <div class="date-hour">
+      <span id="current-date"></span>
+      <span id="current-hour"></span>
+    </div>
+    <script>
+      let timeFormat = localStorage.getItem('timeFormat') || '12';
 
+      function updateDateTime() {
+        const now = new Date();
+        const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+        let timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+
+        if (timeFormat === '12') {
+          timeOptions = { ...timeOptions, hour12: true };
+        } else {
+          timeOptions = { ...timeOptions, hour12: false };
+        }
+
+        document.getElementById('current-date').textContent = now.toLocaleDateString(undefined, dateOptions);
+        document.getElementById('current-hour').textContent = now.toLocaleTimeString(undefined, timeOptions);
+      }
+      setInterval(updateDateTime, 1000);
+      updateDateTime();
+    </script>
     <!-- Login/Register Form -->
     <div id="auth-section">
       <h2>Welcome to Task-app</h2>
@@ -301,7 +546,37 @@
     <div id="timetable-section" class="hidden">
       <button class="logout-btn" onclick="logout()">Logout</button>
       <div class="progress">0% Accomplished</div>
-      <h2>Study Timetable</h2>
+      <h2>Task--app</h2>
+
+      <!-- Pomodoro Timer -->
+      <div class="pomodoro-timer" id="pomodoro-timer">
+        <h3>Pomodoro Timer</h3>
+        <div class="timer-display">
+          <span id="timer">25:00</span>
+        </div>
+        <div class="timer-controls">
+          <button onclick="startTimer()">Start</button>
+          <button onclick="pauseTimer()">Pause</button>
+          <button onclick="resetTimer()">Reset</button>
+        
+        <audio id="bell-sound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+      </div>
+        <audio id="bell-sound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+      </div>
+      <div class="pomodoro-timer" id="break-timer">
+        <h3>Break Timer</h3>
+        <div class="timer-display">
+          <span id="break-timer-display">05:00</span>
+        </div>
+        <div class="timer-controls">
+          <button onclick="startBreakTimer()">Start</button>
+          <button onclick="pauseBreakTimer()">Pause</button>
+          <button onclick="resetBreakTimer()">Reset</button>
+          
+        </div>
+        <audio id="break-bell-sound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+      </div>
+
       <table>
         <thead>
           <tr>
@@ -311,8 +586,8 @@
             <th>Action</th>
           </tr>
         </thead>
-        <tbody id="task-list">
-          <!-- Tasks will be added here dynamically -->
+        <tbody id="task-list"></tbody>
+        <!-- Tasks will be added here dynamically -->
         </tbody>
       </table>
       <div class="add-task">
@@ -322,6 +597,8 @@
         <!-- Add CSV upload feature -->
         <input type="file" id="csv-upload" accept=".csv" style="display: none;">
         <button onclick="document.getElementById('csv-upload').click()">Upload CSV</button>
+        <!-- Add Delete All Tasks button -->
+        <button onclick="deleteAllTasks()">Delete All Tasks</button>
       </div>
       <!-- Footer with developer's name -->
       <div class="footer">
@@ -330,8 +607,43 @@
     </div>
   </div>
   <div class="info">
-    <a href="https://download1501.mediafire.com/lmik4pev10ugM7IpW4R6Qip0yJlfwVEkVt3WY2t4fGwFnEzqGx5Mte0nzGkTil33i9JZxsmfRpSIuumvrF3SyGZLcHGXB6XXfzvVEZyd-05Tk8Dk-ardO325HzCpMiyYGQnJX0bOkuxWSCiDmRJDcYtD8WoaSrYBDqRq5Ko8XHidLrc/o2crjusj9doar8s/Task--app%3D22.18.9.0v.rtf">about the new version</a>
+    <a
+      href="https://download1501.mediafire.com/lmik4pev10ugM7IpW4R6Qip0yJlfwVEkVt3WY2t4fGwFnEzqGx5Mte0nzGkTil33i9JZxsmfRpSIuumvrF3SyGZLcHGXB6XXfzvVEZyd-05Tk8Dk-ardO325HzCpMiyYGQnJX0bOkuxWSCiDmRJDcYtD8WoaSrYBDqRq5Ko8XHidLrc/o2crjusj9doar8s/Task--app%3D22.18.9.0v.rtf">about
+      the new version</a>
   </div>
+  </div>
+    <!-- Dark Mode Toggle Switch -->
+    <label class="dark-mode-switch">
+      <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
+      <span class="slider"></span>
+    </label>
+
+    <!-- Settings Icon -->
+    <div class="settings" onclick="toggleSettings()">⚙️</div>
+
+    <!-- Settings Panel -->
+    <div id="settings-panel">
+      <h3>Settings</h3>
+      <label>
+      Time Format:
+      <select id="time-format">
+        <option value="12">12-hour</option>
+        <option value="24">24-hour</option>
+      </select>
+      </label>
+      <label>
+      Pomodoro Time (minutes):
+      <input type="number" id="pomodoro-length" value="25">
+      </label>
+      <label>
+      Break Time (minutes):
+      <input type="number" id="break-length" value="5">
+      </label>
+      <button onclick="applySettings()">Apply</button>
+    </div>
+
+    
+
 
   <script>
     // Simulated user database (stored in localStorage)
@@ -396,6 +708,7 @@
       currentUser = null;
       document.getElementById('auth-section').classList.remove('hidden');
       document.getElementById('timetable-section').classList.add('hidden');
+      pauseTimer(); // Pause the timer when logging out
     }
 
     // Show timetable section
@@ -459,6 +772,13 @@
       updateProgress();
     }
 
+    // Delete all tasks
+    function deleteAllTasks() {
+      tasks[currentUser] = [];
+      localStorage.setItem(tasksKey, JSON.stringify(tasks));
+      loadTasks();
+    }
+
     // Update progress
     function updateProgress() {
       const userTasks = tasks[currentUser] || [];
@@ -517,6 +837,74 @@
 
     // Call the function on page load
     checkDarkModePreference();
+
+    // Pomodoro Timer
+    let timerInterval;
+    let timeLeft = parseInt(localStorage.getItem('pomodoroLength')) * 60 || 25 * 60; // 25 minutes default
+    let pomodoroLength = parseInt(localStorage.getItem('pomodoroLength')) || 25;
+
+    function updateTimerDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById('timer').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    function startTimer() {
+      if (!timerInterval) {
+        timerInterval = setInterval(() => {
+          if (timeLeft > 0) {
+            timeLeft--;
+            updateTimerDisplay();
+          } else {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            document.getElementById('bell-sound').play();
+            alert('Pomodoro session complete! Take a break.');
+            timeLeft = pomodoroLength * 60; // Reset timer
+            updateTimerDisplay();
+          }
+        }, 1000);
+      }
+    }
+
+    function pauseTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+
+    function resetTimer() {
+      pauseTimer();
+      timeLeft = pomodoroLength * 60;
+      updateTimerDisplay();
+    }
+
+    updateTimerDisplay(); // Initialize timer display
+
+    // Settings Functions
+    function toggleSettings() {
+      const settingsPanel = document.getElementById('settings-panel');
+      settingsPanel.style.display = settingsPanel.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function applySettings() {
+      const timeFormatSelect = document.getElementById('time-format');
+      timeFormat = timeFormatSelect.value;
+      localStorage.setItem('timeFormat', timeFormat);
+
+      const pomodoroLengthInput = document.getElementById('pomodoro-length');
+      pomodoroLength = parseInt(pomodoroLengthInput.value);
+      localStorage.setItem('pomodoroLength', pomodoroLength);
+      timeLeft = pomodoroLength * 60;
+
+      updateDateTime();
+      updateTimerDisplay();
+      toggleSettings();
+    }
+
+    // Initialize settings on page load
+    document.getElementById('time-format').value = timeFormat;
+    document.getElementById('pomodoro-length').value = pomodoroLength;
   </script>
 </body>
+
 </html>
