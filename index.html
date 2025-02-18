@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!--Task--app=22.20.9.0v-->
+  <!--Task--app=22.18.9.0v-->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Study Timetable | lg-GHAZEL</title>
@@ -15,7 +15,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      height: auto;
       margin: 0;
       transition: background-color 0.5s ease, color 0.5s ease; /* Smooth transition */
     }
@@ -253,13 +253,15 @@
       color: #999;
     }
     .info{
-      position: absolute;
-      bottom: 10px;
+      position: fixed;
+      bottom: 5px;
       right: 10px;
       font-size: 14px;
       color: #666;
-      transition: color 0.5s ease; /* Smooth transition */
+      transition: color 0.5s ease;
+       /* Smooth transition */
     }
+
 
     .info a{
       color: #0056b3;
