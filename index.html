@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!--Task--app=22.18.9.0v-->
+  <!--Task--app=22.20.9.0v-->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Study Timetable | lg-GHAZEL</title>
@@ -71,6 +71,7 @@
       margin-top: 20px;
       display: flex;
       justify-content: space-between;
+      gap: 10px;
     }
     .add-task input {
       flex: 1;
@@ -80,7 +81,6 @@
       transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease; /* Smooth transition */
     }
     .add-task button {
-      margin-left: 10px;
       padding: 8px 16px;
       background-color: #0056b3;
       color: white;
@@ -317,6 +317,9 @@
         <input type="text" id="new-task" placeholder="Enter a new task">
         <input type="text" id="new-time" placeholder="Enter time (e.g., 6:15 PM - 6:30 PM)">
         <button onclick="addTask()">Add Task</button>
+        <!-- Add CSV upload feature -->
+        <input type="file" id="csv-upload" accept=".csv" style="display: none;">
+        <button onclick="document.getElementById('csv-upload').click()">Upload CSV</button>
       </div>
       <!-- Footer with developer's name -->
       <div class="footer">
@@ -326,7 +329,6 @@
   </div>
   <div class="info">
     <a href="https://download1501.mediafire.com/lmik4pev10ugM7IpW4R6Qip0yJlfwVEkVt3WY2t4fGwFnEzqGx5Mte0nzGkTil33i9JZxsmfRpSIuumvrF3SyGZLcHGXB6XXfzvVEZyd-05Tk8Dk-ardO325HzCpMiyYGQnJX0bOkuxWSCiDmRJDcYtD8WoaSrYBDqRq5Ko8XHidLrc/o2crjusj9doar8s/Task--app%3D22.18.9.0v.rtf">about the new version</a>
-
   </div>
 
   <script>
@@ -482,6 +484,34 @@
         document.getElementById('dark-mode-toggle').checked = true;
       }
     }
+
+    // Function to handle CSV file upload
+    function handleCSVUpload(event) {
+      const file = event.target.files[0];
+      if (!file) {
+        alert('No file selected.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const text = e.target.result;
+        const rows = text.split('\n'); // Split CSV into rows
+        rows.forEach((row, index) => {
+          if (index === 0) return; // Skip header row (if any)
+          const [task, time] = row.split(','); // Split row into task and time
+          if (task && time) {
+            tasks[currentUser].push({ task: task.trim(), time: time.trim(), done: false });
+          }
+        });
+        localStorage.setItem(tasksKey, JSON.stringify(tasks));
+        loadTasks(); // Reload tasks to display the new ones
+      };
+      reader.readAsText(file); // Read the file as text
+    }
+
+    // Add event listener to the file input
+    document.getElementById('csv-upload').addEventListener('change', handleCSVUpload);
 
     // Call the function on page load
     checkDarkModePreference();
