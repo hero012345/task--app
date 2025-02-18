@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <!--Task--app=23.22.2.0v-->
+  <!--Task--app=22.18.9.0v-->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Task App | lg-GHAZEL</title>
@@ -86,6 +86,7 @@
         display: flex;
         justify-content: space-between;
         gap: 10px;
+        flex-wrap: wrap;
       }
     
       .add-task input {
@@ -485,19 +486,94 @@
         color: #ffffff;
         border-color: #444;
       }
+    
       #time-format {
         padding: 5px;
         border: 1px solid #ddd;
         border-radius: 4px;
         transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
       }
-
+    
       body.dark-mode #time-format {
         background-color: #333;
         color: #ffffff;
         border-color: #444;
       }
+    
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        .container {
+          padding: 15px;
+        }
+    
+        .add-task {
+          flex-direction: column;
+          gap: 10px;
+        }
+    
+        .add-task input,
+        .add-task button {
+          width: 100%;
+        }
+    
+        .timer-controls {
+          flex-direction: column;
+          gap: 5px;
+        }
+    
+        .settings {
+          top: 5px;
+          right: 5px;
+        }
+    
+        .dark-mode-switch {
+          top: 5px;
+          right: 40px;
+        }
+    
+        .logout-btn {
+          top: 5px;
+          left: 5px;
+        }
+      }
+    
+      @media (max-width: 480px) {
+        .container {
+          padding: 10px;
+        }
+    
+        .add-task {
+          flex-direction: column;
+          gap: 5px;
+        }
+    
+        .add-task input,
+        .add-task button {
+          width: 100%;
+        }
+    
+        .timer-controls {
+          flex-direction: column;
+          gap: 5px;
+        }
+    
+        .settings {
+          top: 5px;
+          right: 5px;
+        }
+    
+        .dark-mode-switch {
+          top: 5px;
+          right: 40px;
+        }
+    
+        .logout-btn {
+          top: 5px;
+          left: 5px;
+        }
+      }
     </style>
+    
     
 </head>
 
@@ -561,7 +637,6 @@
         
         <audio id="bell-sound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
       </div>
-      
 
       <table>
         <thead>
